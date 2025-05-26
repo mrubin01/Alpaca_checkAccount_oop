@@ -14,6 +14,19 @@ api_live = tradeapi.REST(key_id=config.API_KEY_LIVE, secret_key=config.SECRET_KE
 
 # a list with a dict for each symbol
 positions = api_live.list_positions()
+positions_equities = []
+positions_cryptos = []
+positions_options = []
+
+for p in positions:
+    if p.asset_class == "us_equity":
+        positions_equities.append(p.symbol)
+    elif p.asset_class == "crypto":
+        positions_cryptos.append(p.symbol)
+    elif p.asset_class == "us_option":
+        positions_options.append(p.symbol)
+    else:
+        continue
 
 # Cash deposits since Dec-23: this does not factor withdrawals in
 TOTAL_DEPOSIT = 0
